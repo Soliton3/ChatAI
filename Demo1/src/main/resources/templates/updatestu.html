@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">修改学生信息</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" action="/stu/update" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${stu.stuid}" name="stuid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">班级</label>
+                                <div class="col-sm-8">
+                                    <select name="clsid" class="form-control">
+                                        <option th:each="ClassInfo:${clsinfo}" th:value="${ClassInfo.clsid}" th:text="${ClassInfo.clsName}"
+                                        th:selected="${ClassInfo.clsid==stu.clsid}"
+                                        >大专</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${stu.stu_name}" class="form-control" name="stu_name" placeholder="姓名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" th:value="${stu.password}" class="form-control" name="password" placeholder="密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">性别</label>
+                                <div class="col-sm-10">
+                                    <label class="radio-inline">
+                                        <input checked type="radio" th:checked="${stu.stu_sex}==true?1:0" name="stu_sex" value="1"> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" th:checked="${stu.stu_sex}==false?1:0" name="stu_sex" value="0"> 女
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">出生日期</label>
+                                <div class="col-sm-8">
+                                    <input type="date" th:value="${stu.stu_birthday}" class="form-control" name="stu_birthday" id="inputPassword3">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">兴趣爱好</label>
+                                <div class=" col-sm-10">
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" th:checked="${stu.stu_interest!=null&&stu.stu_interest.contains('电影')}" name="stu_interest" id="inlineCheckbox1" value="电影"> 电影
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" th:checked="${stu.stu_interest!=null&&stu.stu_interest.contains('篮球')}" name="stu_interest" id="inlineCheckbox2" value="篮球"> 篮球
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" th:checked="${stu.stu_interest!=null&&stu.stu_interest.contains('看书')}" name="stu_interest" id="inlineCheckbox3" value="看书"> 看书
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" th:checked="${stu.stu_interest!=null&&stu.stu_interest.contains('游戏')}" name="stu_interest" id="inlineCheckbox4" value="游戏"> 游戏
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" th:checked="${stu.stu_interest!=null&&stu.stu_interest.contains('做饭')}" name="stu_interest" id="inlineCheckbox5" value="做饭"> 做饭
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">学历</label>
+                                <div class="col-sm-10">
+                                    <select name="stu_education" class="form-control">
+                                        <option value="大专" th:field="${stu.stu_education}">大专</option>
+                                        <option value="本科" th:field="${stu.stu_education}">本科</option>
+                                        <option value="硕士" th:field="${stu.stu_education}">硕士</option>
+                                        <option value="博士" th:field="${stu.stu_education}">博士</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${stu.stu_phone}" class="form-control" name="stu_phone" placeholder="电话">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${stu.stu_email}" class="form-control" name="stu_email" id="inputEmail3" placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">家庭住址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${stu.stu_address}" class="form-control" name="stu_address"  placeholder="家庭住址">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">幸运色</label>
+                                <div class="col-sm-10">
+                                    <input type="color" th:value="${stu.my_color}" class="form-control" name="my_color"  placeholder="幸运色">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">幸运数字</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${stu.lucky_number}" class="form-control" name="lucky_number" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">自我介绍</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" th:text="${stu.re_mark}" class="form-control" name="re_mark" rows="3"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-info" >修改学生</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-3">
+                            <img th:src="'http://localhost:8080/imgs/'+${stu.stu_image_url}"/>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">选择图片</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" id="upfile" name="filepic">
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+<script language="JavaScript">
+    $('#upfile').change(function () {
+        var file = $('#upfile').get(0).files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            console.log(e);
+            $('#imgshow').get(0).src = e.target.result;
+        }
+    })
+</script>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生信息</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+</head>
+<body>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Spring Boot CRUD 实例练习！2020-12-28</h3>
+    </div>
+    <div class="panel-body">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title" > </br> 学生信息管理系统。你可以对学生信息进行删除/修改！或
+                    <a herf="/stu/add" class="btn">添加学生信息</a>
+                    </br><p></p>
+                </h3>
+            </div>
+        </div>
+        <br/>
+        <form class="form-inline" method="post" action="/stu/list">
+            <div class="form-group">
+                <label>班级</label>
+                <select style="width: 200px;" name="clsid" class="form-control">
+                    <option value="0">---请选择班级---</option>
+                    <option th:each="ClassInfo:${clsinfo}" th:value="${ClassInfo.clsid}" th:text="${ClassInfo.clsName}"
+                    th:selected="${ClassInfo.clsid==clsid}"
+                    >大专</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>姓名</label>
+                <input type="text" class="form-control" th:value="${stuname}" name="stuName">
+            </div>
+            <button type="submit" class="btn btn-info">查询</button>
+        </form>
+        <hr>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>头像</th>
+                <th>班级名称</th>
+                <th>用户名</th>
+                <th>性别</th>
+                <th>出生日期</th>
+                <th>学历</th>
+                <th>兴趣爱好</th>
+                <th>幸运色</th>
+                <th>幸运数字</th>
+                <th>电子邮箱</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="Student,userStat:${stus.list}">
+                    <td th:text="${userStat.index+1}">1001</td>
+                    <td>
+                        <img th:src="'http://localhost:8080/imgs/'+${Student.stu_image_url}" width="80px" height="80px"/>
+                    </td>
+                    <td th:text="${Student.clsName}">1001</td>
+                    <td th:text="${Student.stu_name}">Jordan</td>
+                    <td th:text="${Student.stu_sex}==true?'男':'女'">Man</td>
+                    <td th:text="${Student.stu_birthday}">1967</td>
+                    <td th:text="${Student.stu_education}">本科</td>
+                    <td th:text="${Student.stu_interest}">篮球</td>
+                    <td>
+                        <div th:style="'width:100%;height:100%;background-color:'+${Student.my_color}">
+                        &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge" th:text="${Student.lucky_number}"></span>
+                    </td>
+                    <td th:text="${Student.stu_email}">Jordan@NBA.com</td>
+                    <td ><a th:href="@{'delete/'+${Student.stuid}}">删除</a>|
+                        <a th:href="@{'update/'+${Student.stuid}}">修改</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a th:href="@{/stu/list(pageIndex=${stus.pageNum-1},pageSize=5,clsid=${clsid},stuName=${stuname})}" aria-label="Previous">
+                        <span arias-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <th:block th:each="nav:${stus.navigatepageNums}">
+                    <li th:class="${nav==stus.pageNum}?'active':''">
+                        <a th:href="@{/stu/list(pageIndex=${nav},pageSize=5,clsid=${clsid},stuName=${stuname})}"
+                           th:text="${nav}"></a>
+                    </li>
+                </th:block>
+                <li>
+                    <a th:href="@{/stu/list(pageIndex=${stus.pageNum+1},pageSize=5,clsid=${clsid},stuName=${stuname})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
